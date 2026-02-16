@@ -1,0 +1,63 @@
+{
+  "schemaVersion": "1.0.0",
+  "projectStateVersion": 3,
+  "summary": "Create an e-commerce fashion website named VUURIX.",
+  "architectural_notes": [],
+  "known_issues": [],
+  "isFixRequest": false,
+  "imageRequirements": "## Required Images\n- Minimal luxury wordmark logo, black on transparent background (vuurix-logo.dim_512x512.png)\n- Fashion editorial hero banner with neutral tones and abstract fabric texture, no text (vuurix-hero.dim_1600x600.png)\n- Clean product placeholder image with subtle studio backdrop, square (vuurix-product-placeholder.dim_800x800.png)\n- Set of 3 additional fashion product placeholder images with varied neutral backdrops, square (vuurix-product-placeholder-2.dim_800x800.png)\n- Set of 3 additional fashion product placeholder images with varied neutral backdrops, square (vuurix-product-placeholder-3.dim_800x800.png)",
+  "existing_features": [
+    {
+      "id": "feature-create-the-vuurix-fashion-storefront-with-core-pages-home-hero-featured-products-product-listing-browse-all-category-filtering-product-detail-images-price-description-selectable-size-color-if-available-cart-and-checkout-collect-shipping-info-and-place-an-order",
+      "title": "Create the VUURIX fashion storefront with core pages: Home (hero + featured products), Product Listing (browse all), Category filtering, Product Detail (images, price, description, selectable size/color if available), Cart, and Checkout (collect shipping info and place an order).",
+      "reqIds": [
+        "REQ-1"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-wire-the-frontend-to-the-backend-using-react-query-for-loading-product-lists-product-details-and-order-creation-including-loading-and-error-states",
+      "title": "Wire the frontend to the backend using React Query for loading product lists, product details, and order creation, including loading and error states.",
+      "reqIds": [
+        "REQ-3"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-apply-a-coherent-fashion-forward-visual-theme-for-vuurix-and-enforce-it-consistently-across-the-app-typography-spacing-buttons-cards-and-page-layout-use-english-for-all-ui-text",
+      "title": "Apply a coherent fashion-forward visual theme for VUURIX and enforce it consistently across the app (typography, spacing, buttons, cards, and page layout). Use English for all UI text.",
+      "reqIds": [
+        "REQ-4"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-generated-static-brand-assets-and-placeholders-for-a-polished-mvp-vuurix-logo-a-homepage-hero-banner-and-a-small-set-of-product-placeholder-images-render-them-from-frontend-public-assets-generated-no-backend-image-serving",
+      "title": "Add generated static brand assets and placeholders for a polished MVP: VUURIX logo, a homepage hero banner, and a small set of product placeholder images; render them from frontend/public/assets/generated (no backend image serving).",
+      "reqIds": [
+        "REQ-5"
+      ],
+      "version": 1
+    }
+  ],
+  "new_feature_requests": [
+    {
+      "id": "AR-1",
+      "summary": "Build VUURIX: an e-commerce website for fashion (storefront and shopping experience).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-3",
+      "summary": "Implement product and order data models and canister APIs to support the storefront: store a catalog of fashion products (including name, description, price, category, image references, and optional variants like size/color) and allow creating and retrieving orders.",
+      "reqIds": [
+        "REQ-2"
+      ],
+      "status": "pending"
+    }
+  ],
+  "gameProjectType": "none",
+  "projectName": "VUURIX",
+  "clarification_mode": "instant",
+  "clarification_rounds": 0
+}

@@ -1,0 +1,132 @@
+{
+  "kind": "build_request",
+  "title": "VUURIX Fashion E‑commerce Website (MVP)",
+  "projectName": "VUURIX",
+  "priority": "normal",
+  "requirements": [
+    {
+      "id": "REQ-1",
+      "text": "Create the VUURIX fashion storefront with core pages: Home (hero + featured products), Product Listing (browse all), Category filtering, Product Detail (images, price, description, selectable size/color if available), Cart, and Checkout (collect shipping info and place an order).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Create a e commerce  website name  VUURIX for fashion"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Navigation exists for Home, Shop, Cart, and Checkout.",
+        "Users can browse products on a listing page and open a product detail page.",
+        "Users can add/remove items and change quantities in the cart.",
+        "Checkout form validates required fields (name, email, address) before allowing order placement.",
+        "After placing an order, the UI shows an order confirmation state with an order ID."
+      ]
+    },
+    {
+      "id": "REQ-2",
+      "text": "Implement product and order data models and canister APIs to support the storefront: store a catalog of fashion products (including name, description, price, category, image references, and optional variants like size/color) and allow creating and retrieving orders.",
+      "target": "backend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Create a e commerce  website name  VUURIX for fashion"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Backend exposes query methods to list products and fetch a product by ID.",
+        "Backend exposes methods to create an order from cart line items plus shipping info and returns an order ID.",
+        "Backend stores orders in stable storage so they persist across canister upgrades (no migration required for initial build).",
+        "Backend exposes a query method to fetch an order by ID (at least for the creator if authentication is used, otherwise available by ID for MVP)."
+      ]
+    },
+    {
+      "id": "REQ-3",
+      "text": "Wire the frontend to the backend using React Query for loading product lists, product details, and order creation, including loading and error states.",
+      "target": "both",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Create a e commerce  website name  VUURIX for fashion"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Product listing and product detail pages load data from the backend canister (not hardcoded).",
+        "Create-order action calls the backend and shows a success or error message.",
+        "All data-fetching views include a visible loading state and a visible error state."
+      ]
+    },
+    {
+      "id": "REQ-4",
+      "text": "Apply a coherent fashion-forward visual theme for VUURIX and enforce it consistently across the app (typography, spacing, buttons, cards, and page layout). Use English for all UI text.",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Create a e commerce  website name  VUURIX for fashion"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Theme is consistent across all pages (same design system for buttons, forms, product cards).",
+        "Color palette avoids blue/purple by default; use a refined fashion aesthetic (e.g., monochrome/cream with high-contrast accents).",
+        "All user-facing text is English and brand name appears as “VUURIX”."
+      ]
+    },
+    {
+      "id": "REQ-5",
+      "text": "Add generated static brand assets and placeholders for a polished MVP: VUURIX logo, a homepage hero banner, and a small set of product placeholder images; render them from frontend/public/assets/generated (no backend image serving).",
+      "target": "frontend",
+      "source": {
+        "messageIds": [
+          "msg-2"
+        ],
+        "quotes": [
+          "Create a e commerce  website name  VUURIX for fashion"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Generated images are committed under frontend/public/assets/generated and are referenced by the UI.",
+        "Home page displays the hero banner and VUURIX logo.",
+        "Products without custom images display a consistent placeholder image."
+      ]
+    }
+  ],
+  "constraints": [
+    "Backend must remain a single Motoko actor (all logic in backend/main.mo).",
+    "Do not edit any frontend files under frontend/src/components/ui or other immutablePaths; compose UI components instead.",
+    "Do not add external databases or non-supported backend languages/frameworks."
+  ],
+  "nonGoals": [
+    "Payment processing integration (e.g., Stripe) is out of scope for this MVP unless explicitly requested later.",
+    "Admin dashboard/product management UI is out of scope; the initial catalog can be seeded in code.",
+    "Shipping rate calculation, tax calculation, and inventory management are out of scope.",
+    "Third-party authentication providers (non-Internet Identity) are out of scope."
+  ],
+  "imageRequirements": {
+    "required": [
+      "Minimal luxury wordmark logo, black on transparent background (vuurix-logo.dim_512x512.png)",
+      "Fashion editorial hero banner with neutral tones and abstract fabric texture, no text (vuurix-hero.dim_1600x600.png)",
+      "Clean product placeholder image with subtle studio backdrop, square (vuurix-product-placeholder.dim_800x800.png)",
+      "Set of 3 additional fashion product placeholder images with varied neutral backdrops, square (vuurix-product-placeholder-2.dim_800x800.png)",
+      "Set of 3 additional fashion product placeholder images with varied neutral backdrops, square (vuurix-product-placeholder-3.dim_800x800.png)"
+    ],
+    "edits": []
+  },
+  "userProfileUpdate": {
+    "goalsToAdd": [],
+    "goalsToRemove": [],
+    "preferencesToAdd": [],
+    "preferencesToRemove": [],
+    "miscToAdd": [],
+    "miscToRemove": [],
+    "fieldsToSet": {},
+    "fieldsToDelete": []
+  }
+}
