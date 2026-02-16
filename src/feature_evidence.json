@@ -2,21 +2,13 @@
   "kind": "feature_evidence_report",
   "features": [
     {
-      "featureId": "feature-create-the-vuurix-fashion-storefront-with-core-pages-home-hero-featured-products-product-listing-browse-all-category-filtering-product-detail-images-price-description-selectable-size-color-if-available-cart-and-checkout-collect-shipping-info-and-place-an-order",
-      "featureTitle": "Create the VUURIX fashion storefront with core pages: Home (hero + featured products), Product Listing (browse all), Category filtering, Product Detail (images, price, description, selectable size/color if available), Cart, and Checkout (collect shipping info and place an order).",
+      "featureId": "feature-add-an-admin-only-product-upload-management-page-that-lets-an-admin-create-edit-and-delete-products-in-the-vuurix-catalog-fields-name-price-description-category-image-sizes-colors",
+      "featureTitle": "Add an admin-only Product Upload & Management page that lets an admin create, edit, and delete products in the VUURIX catalog (fields: name, price, description, category, image, sizes, colors).",
       "files": [
         "frontend/src/App.tsx",
-        "frontend/src/components/layout/SiteFooter.tsx",
         "frontend/src/components/layout/SiteHeader.tsx",
-        "frontend/src/components/store/ProductCard.tsx",
-        "frontend/src/components/store/QuantityControl.tsx",
-        "frontend/src/pages/CartPage.tsx",
-        "frontend/src/pages/CheckoutPage.tsx",
-        "frontend/src/pages/HomePage.tsx",
-        "frontend/src/pages/OrderConfirmationPage.tsx",
-        "frontend/src/pages/ProductDetailPage.tsx",
-        "frontend/src/pages/ShopPage.tsx",
-        "frontend/src/state/cart.ts"
+        "frontend/src/hooks/queries/useIsCallerAdmin.ts",
+        "frontend/src/pages/AdminProductsPage.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -27,70 +19,16 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-1"
+        "REQ-6"
       ],
       "confidence": "high"
     },
     {
-      "featureId": "feature-wire-the-frontend-to-the-backend-using-react-query-for-loading-product-lists-product-details-and-order-creation-including-loading-and-error-states",
-      "featureTitle": "Wire the frontend to the backend using React Query for loading product lists, product details, and order creation, including loading and error states.",
+      "featureId": "feature-support-adding-product-photos-from-the-admin-page-by-allowing-either-a-entering-an-image-url-or-b-selecting-an-image-file-that-is-converted-to-a-data-url-and-stored-in-the-product-imageurl-field-show-a-preview-before-saving",
+      "featureTitle": "Support adding product photos from the admin page by allowing either (a) entering an image URL or (b) selecting an image file that is converted to a data URL and stored in the product imageUrl field; show a preview before saving.",
       "files": [
-        "frontend/src/components/system/ErrorState.tsx",
-        "frontend/src/components/system/LoadingState.tsx",
-        "frontend/src/hooks/mutations/useCreateOrder.ts",
-        "frontend/src/hooks/queries/useProduct.ts",
-        "frontend/src/hooks/queries/useProducts.ts",
-        "frontend/src/hooks/useActor.ts",
-        "frontend/src/pages/CheckoutPage.tsx",
-        "frontend/src/pages/ProductDetailPage.tsx",
-        "frontend/src/pages/ShopPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-3"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-apply-a-coherent-fashion-forward-visual-theme-for-vuurix-and-enforce-it-consistently-across-the-app-typography-spacing-buttons-cards-and-page-layout-use-english-for-all-ui-text",
-      "featureTitle": "Apply a coherent fashion-forward visual theme for VUURIX and enforce it consistently across the app (typography, spacing, buttons, cards, and page layout). Use English for all UI text.",
-      "files": [
-        "frontend/src/App.tsx",
-        "frontend/src/components/design/Price.tsx",
-        "frontend/src/components/layout/AppLayout.tsx",
-        "frontend/src/components/store/ProductCard.tsx",
-        "frontend/src/index.css",
-        "frontend/src/pages/CheckoutPage.tsx"
-      ],
-      "components": [
-        "authorization@4.0.0",
-        "core-infrastructure@1.0.2",
-        "shadcn-ui@1.0.0",
-        "build-template-react@1.0.0",
-        "initial-app@1.0.0",
-        "github-export-icp-cli@1.0.0"
-      ],
-      "testIds": [
-        "REQ-4"
-      ],
-      "confidence": "high"
-    },
-    {
-      "featureId": "feature-add-generated-static-brand-assets-and-placeholders-for-a-polished-mvp-vuurix-logo-a-homepage-hero-banner-and-a-small-set-of-product-placeholder-images-render-them-from-frontend-public-assets-generated-no-backend-image-serving",
-      "featureTitle": "Add generated static brand assets and placeholders for a polished MVP: VUURIX logo, a homepage hero banner, and a small set of product placeholder images; render them from frontend/public/assets/generated (no backend image serving).",
-      "files": [
-        "frontend/src/components/brand/BrandLogo.tsx",
-        "frontend/src/components/store/ProductCard.tsx",
         "frontend/src/components/store/ProductImage.tsx",
-        "frontend/src/pages/HomePage.tsx",
-        "frontend/src/pages/ProductDetailPage.tsx"
+        "frontend/src/pages/AdminProductsPage.tsx"
       ],
       "components": [
         "authorization@4.0.0",
@@ -101,7 +39,29 @@
         "github-export-icp-cli@1.0.0"
       ],
       "testIds": [
-        "REQ-5"
+        "REQ-7"
+      ],
+      "confidence": "high"
+    },
+    {
+      "featureId": "feature-add-react-query-hooks-for-admin-product-mutations-add-update-delete-and-ensure-product-list-queries-are-invalidated-refetched-after-successful-mutations",
+      "featureTitle": "Add React Query hooks for admin product mutations (add, update, delete) and ensure product list queries are invalidated/refetched after successful mutations.",
+      "files": [
+        "frontend/src/hooks/mutations/useAddProduct.ts",
+        "frontend/src/hooks/mutations/useDeleteProduct.ts",
+        "frontend/src/hooks/mutations/useUpdateProduct.ts",
+        "frontend/src/pages/AdminProductsPage.tsx"
+      ],
+      "components": [
+        "authorization@4.0.0",
+        "core-infrastructure@1.0.2",
+        "shadcn-ui@1.0.0",
+        "build-template-react@1.0.0",
+        "initial-app@1.0.0",
+        "github-export-icp-cli@1.0.0"
+      ],
+      "testIds": [
+        "REQ-9"
       ],
       "confidence": "high"
     }

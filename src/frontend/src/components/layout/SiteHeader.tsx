@@ -2,6 +2,7 @@ import { Link, useNavigate } from '@tanstack/react-router';
 import { ShoppingBag, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 import { useCartStore } from '../../state/cart';
+import { useIsCallerAdmin } from '../../hooks/queries/useIsCallerAdmin';
 import BrandLogo from '../brand/BrandLogo';
 import { Button } from '@/components/ui/button';
 
@@ -9,12 +10,17 @@ export default function SiteHeader() {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const itemCount = useCartStore((state) => state.getItemCount());
+  const { data: isAdmin } = useIsCallerAdmin();
 
   const navLinks = [
     { label: 'Home', path: '/' },
     { label: 'Shop', path: '/shop' },
     { label: 'Cart', path: '/cart' }
   ];
+
+  if (isAdmin) {
+    navLinks.push({ label: 'Admin', path: '/admin/products' });
+  }
 
   return (
     <header className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -89,4 +95,3 @@ export default function SiteHeader() {
     </header>
   );
 }
-

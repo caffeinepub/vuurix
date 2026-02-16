@@ -1,11 +1,10 @@
 {
   "schemaVersion": "1.0.0",
-  "projectStateVersion": 3,
+  "projectStateVersion": 5,
   "summary": "Create an e-commerce fashion website named VUURIX.",
   "architectural_notes": [],
   "known_issues": [],
   "isFixRequest": false,
-  "imageRequirements": "## Required Images\n- Minimal luxury wordmark logo, black on transparent background (vuurix-logo.dim_512x512.png)\n- Fashion editorial hero banner with neutral tones and abstract fabric texture, no text (vuurix-hero.dim_1600x600.png)\n- Clean product placeholder image with subtle studio backdrop, square (vuurix-product-placeholder.dim_800x800.png)\n- Set of 3 additional fashion product placeholder images with varied neutral backdrops, square (vuurix-product-placeholder-2.dim_800x800.png)\n- Set of 3 additional fashion product placeholder images with varied neutral backdrops, square (vuurix-product-placeholder-3.dim_800x800.png)",
   "existing_features": [
     {
       "id": "feature-create-the-vuurix-fashion-storefront-with-core-pages-home-hero-featured-products-product-listing-browse-all-category-filtering-product-detail-images-price-description-selectable-size-color-if-available-cart-and-checkout-collect-shipping-info-and-place-an-order",
@@ -38,6 +37,30 @@
         "REQ-5"
       ],
       "version": 1
+    },
+    {
+      "id": "feature-add-an-admin-only-product-upload-management-page-that-lets-an-admin-create-edit-and-delete-products-in-the-vuurix-catalog-fields-name-price-description-category-image-sizes-colors",
+      "title": "Add an admin-only Product Upload & Management page that lets an admin create, edit, and delete products in the VUURIX catalog (fields: name, price, description, category, image, sizes, colors).",
+      "reqIds": [
+        "REQ-6"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-support-adding-product-photos-from-the-admin-page-by-allowing-either-a-entering-an-image-url-or-b-selecting-an-image-file-that-is-converted-to-a-data-url-and-stored-in-the-product-imageurl-field-show-a-preview-before-saving",
+      "title": "Support adding product photos from the admin page by allowing either (a) entering an image URL or (b) selecting an image file that is converted to a data URL and stored in the product imageUrl field; show a preview before saving.",
+      "reqIds": [
+        "REQ-7"
+      ],
+      "version": 1
+    },
+    {
+      "id": "feature-add-react-query-hooks-for-admin-product-mutations-add-update-delete-and-ensure-product-list-queries-are-invalidated-refetched-after-successful-mutations",
+      "title": "Add React Query hooks for admin product mutations (add, update, delete) and ensure product list queries are invalidated/refetched after successful mutations.",
+      "reqIds": [
+        "REQ-9"
+      ],
+      "version": 1
     }
   ],
   "new_feature_requests": [
@@ -52,6 +75,26 @@
       "summary": "Implement product and order data models and canister APIs to support the storefront: store a catalog of fashion products (including name, description, price, category, image references, and optional variants like size/color) and allow creating and retrieving orders.",
       "reqIds": [
         "REQ-2"
+      ],
+      "status": "pending"
+    },
+    {
+      "id": "AR-4",
+      "summary": "Add an admin Product Upload page/panel to allow uploading and managing clothing products (name, price, description, category, photos, sizes/colors).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-5",
+      "summary": "Integrate the VUURIX website with Shopify (sync products/orders or use Shopify as backend).",
+      "reqIds": [],
+      "status": "pending"
+    },
+    {
+      "id": "AR-8",
+      "summary": "Expose a simple backend query method that the frontend can use to determine whether the current caller is an admin, so the UI can conditionally show admin navigation entry points and guard admin pages.",
+      "reqIds": [
+        "REQ-8"
       ],
       "status": "pending"
     }

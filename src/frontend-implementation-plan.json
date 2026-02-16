@@ -1,251 +1,93 @@
 {
   "kind": "implementation_plan",
   "version": "1.0",
-  "title": "VUURIX Fashion Storefront (Frontend MVP)",
+  "title": "VUURIX Admin Product Upload & Management (Frontend)",
   "requirements": [
     {
-      "id": "REQ-1",
-      "summary": "Build core storefront pages and cart/checkout UX (Home, Shop, category filtering, Product Detail, Cart, Checkout, and order confirmation).",
+      "id": "REQ-6",
+      "summary": "Add an admin-only product management route with list + create/edit/delete UI guarded by admin status.",
       "acceptanceCriteria": [
-        "Navigation exists for Home, Shop, Cart, and Checkout.",
-        "Users can browse products on a listing page and open a product detail page.",
-        "Users can add/remove items and change quantities in the cart.",
-        "Checkout form validates required fields (name, email, address) before allowing order placement.",
-        "After placing an order, the UI shows an order confirmation state with an order ID."
+        "A new route exists for an admin product management page (e.g., /admin/products) and is reachable via TanStack Router.",
+        "The page shows a product list with actions to Create, Edit, and Delete a product.",
+        "Create/Edit forms support: name (text), description (multiline), price (number), category (text), sizes (list of strings), colors (list of strings), and an image field.",
+        "Submitting Create calls the backend to persist the product and refreshes the product list in the UI.",
+        "Submitting Edit updates the product in the backend and refreshes the UI.",
+        "Delete removes the product in the backend and refreshes the UI.",
+        "If a non-admin user navigates to the admin page, the UI shows a clear English message indicating access is restricted and does not allow product changes."
       ],
       "file_operations": [
         {
           "path": "frontend/src/App.tsx",
-          "operation": "create",
-          "description": "Create the app shell (header + footer) and wire all required routes and navigation (Home, Shop, Product Detail, Cart, Checkout, and Order Confirmation) ensuring no pages are orphaned."
+          "operation": "modify",
+          "description": "Register a new TanStack Router route for /admin/products and wire it into the existing routeTree so it is navigable. Verify the component's usage instructions before implementing."
         },
         {
-          "path": "frontend/src/pages/HomePage.tsx",
+          "path": "frontend/src/pages/AdminProductsPage.tsx",
           "operation": "create",
-          "description": "Implement Home page with hero section, featured products section (derived from product list), and clear navigation CTAs to Shop and Cart."
-        },
-        {
-          "path": "frontend/src/pages/ShopPage.tsx",
-          "operation": "create",
-          "description": "Implement Product Listing page with category filtering UI and product grid; ensure product cards navigate to Product Detail."
-        },
-        {
-          "path": "frontend/src/pages/ProductDetailPage.tsx",
-          "operation": "create",
-          "description": "Implement Product Detail page with product gallery/primary image, price, description, and selectable size/color controls when available; include Add to Cart behavior."
-        },
-        {
-          "path": "frontend/src/pages/CartPage.tsx",
-          "operation": "create",
-          "description": "Implement Cart page with line items, quantity controls, remove actions, subtotal/total summary, and CTA to Checkout."
-        },
-        {
-          "path": "frontend/src/pages/CheckoutPage.tsx",
-          "operation": "create",
-          "description": "Implement Checkout page with shipping form (name/email/address required) and Place Order action; block submission until validation passes; show progress/disabled states while submitting."
-        },
-        {
-          "path": "frontend/src/pages/OrderConfirmationPage.tsx",
-          "operation": "create",
-          "description": "Implement confirmation state after successful order placement and display the returned order ID; provide a route target for redirect after checkout."
-        },
-        {
-          "path": "frontend/src/state/cart.ts",
-          "operation": "create",
-          "description": "Add cart state management (context or lightweight store) with add/remove/update quantity, persisted to localStorage for MVP continuity."
-        },
-        {
-          "path": "frontend/src/components/store/ProductCard.tsx",
-          "operation": "create",
-          "description": "Create a reusable ProductCard component for listing/featured sections; compose (do not modify) existing shadcn-ui components where appropriate. Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/store/QuantityControl.tsx",
-          "operation": "create",
-          "description": "Create a reusable quantity stepper control used by Cart line items; compose (do not modify) existing shadcn-ui components where appropriate. Verify the component's usage instructions before implementing."
+          "description": "Implement the admin product management page UI: show products list, create/edit form, and delete action; guard the entire experience by checking admin status and rendering an English access-restricted message for non-admins (no mutation actions available). Use the selected authorization component’s frontend capability (role-based access control UI patterns) to guide admin gating behavior; verify the component's usage instructions before implementing."
         },
         {
           "path": "frontend/src/components/layout/SiteHeader.tsx",
-          "operation": "create",
-          "description": "Create a consistent header with VUURIX brand, primary navigation links (Home/Shop/Cart/Checkout), and cart item count indicator."
+          "operation": "modify",
+          "description": "Conditionally add an Admin navigation entry (e.g., 'Admin') that links to /admin/products only when the current caller is an admin; hide it otherwise. Use the selected authorization component’s frontend capability to determine visibility based on role/admin status; verify the component's usage instructions before implementing."
         },
         {
-          "path": "frontend/src/components/layout/SiteFooter.tsx",
+          "path": "frontend/src/hooks/queries/useIsCallerAdmin.ts",
           "operation": "create",
-          "description": "Create a minimal footer consistent with the fashion-forward theme and English UI text."
+          "description": "Add a React Query hook that calls the backend admin-check capability (isCallerAdmin) via the actor and returns a boolean for UI guards and conditional navigation. Use the selected authorization component’s frontend capability for handling authorization errors gracefully; verify the component's usage instructions before implementing."
         }
       ]
     },
     {
-      "id": "REQ-3",
-      "summary": "Use React Query to load products/product details and to create orders via the backend canister, with visible loading and error states.",
+      "id": "REQ-7",
+      "summary": "Support product photos in the admin form via image URL or file-to-data-URL with preview, and ensure storefront renders saved imageUrl values with placeholder fallback.",
       "acceptanceCriteria": [
-        "Product listing and product detail pages load data from the backend canister (not hardcoded).",
-        "Create-order action calls the backend and shows a success or error message.",
-        "All data-fetching views include a visible loading state and a visible error state."
+        "The admin product form provides an input for an image URL and an optional file picker.",
+        "When a file is selected, the UI shows an image preview and stores the resulting data URL into the product imageUrl value used on save.",
+        "Existing storefront components (product cards and product detail) correctly render newly added product images using the saved imageUrl (http(s) URL or data URL).",
+        "If no image is provided, the storefront continues to fall back to existing placeholder behavior."
       ],
       "file_operations": [
         {
-          "path": "frontend/src/api/actorClient.ts",
-          "operation": "create",
-          "description": "Create a small frontend wrapper around useActor to standardize access to the backend actor for React Query queryFns and mutations."
-        },
-        {
-          "path": "frontend/src/api/products.ts",
-          "operation": "create",
-          "description": "Add product data functions that call backend capabilities (getProducts, getProduct) and normalize UI-friendly shapes (e.g., bigint price formatting handled in UI layer)."
-        },
-        {
-          "path": "frontend/src/api/orders.ts",
-          "operation": "create",
-          "description": "Add order creation function calling backend capability (createOrder) and return the order ID for confirmation UI."
-        },
-        {
-          "path": "frontend/src/hooks/queries/useProducts.ts",
-          "operation": "create",
-          "description": "Implement a React Query hook for product listing with loading/error states consumed by Shop and Home featured sections."
-        },
-        {
-          "path": "frontend/src/hooks/queries/useProduct.ts",
-          "operation": "create",
-          "description": "Implement a React Query hook for product detail by ID with loading/error states consumed by Product Detail page."
-        },
-        {
-          "path": "frontend/src/hooks/mutations/useCreateOrder.ts",
-          "operation": "create",
-          "description": "Implement a React Query mutation for creating orders, exposing isPending/success/error for Checkout UX."
-        },
-        {
-          "path": "frontend/src/components/system/LoadingState.tsx",
-          "operation": "create",
-          "description": "Create a consistent loading UI component used across data-fetching pages; compose (do not modify) existing shadcn-ui components where appropriate. Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/components/system/ErrorState.tsx",
-          "operation": "create",
-          "description": "Create a consistent error UI component used across data-fetching pages (including authorization-trap friendly messaging); compose (do not modify) existing shadcn-ui components where appropriate. Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/pages/ShopPage.tsx",
+          "path": "frontend/src/pages/AdminProductsPage.tsx",
           "operation": "modify",
-          "description": "Wire the Shop page to use React Query product listing hook; render LoadingState and ErrorState visibly."
-        },
-        {
-          "path": "frontend/src/pages/ProductDetailPage.tsx",
-          "operation": "modify",
-          "description": "Wire the Product Detail page to use React Query product detail hook; render LoadingState and ErrorState visibly."
-        },
-        {
-          "path": "frontend/src/pages/CheckoutPage.tsx",
-          "operation": "modify",
-          "description": "Wire Place Order to React Query create-order mutation; show success/error UI and navigate to Order Confirmation on success."
-        },
-        {
-          "path": "frontend/src/hooks/useActor.ts",
-          "operation": "modify",
-          "description": "Ensure actor lifecycle works cleanly with React Query (e.g., identity changes) and that authorization initialization errors are surfaced in a UI-friendly way for downstream ErrorState handling. Verify the component's usage instructions before implementing."
-        }
-      ]
-    },
-    {
-      "id": "REQ-4",
-      "summary": "Apply a consistent fashion-forward theme (monochrome/cream palette, typography, spacing) across all pages with English UI text and “VUURIX” branding.",
-      "acceptanceCriteria": [
-        "Theme is consistent across all pages (same design system for buttons, forms, product cards).",
-        "Color palette avoids blue/purple by default; use a refined fashion aesthetic (e.g., monochrome/cream with high-contrast accents).",
-        "All user-facing text is English and brand name appears as “VUURIX”."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/src/index.css",
-          "operation": "create",
-          "description": "Create global styles (Tailwind base/components/utilities if applicable) and define a VUURIX fashion-forward palette (avoid blue/purple) plus base typography and layout defaults."
-        },
-        {
-          "path": "frontend/src/components/layout/AppLayout.tsx",
-          "operation": "create",
-          "description": "Create a shared layout wrapper enforcing consistent page spacing, max-width, and typographic rhythm across all pages."
-        },
-        {
-          "path": "frontend/src/components/design/Price.tsx",
-          "operation": "create",
-          "description": "Add a small formatting component for displaying bigint prices consistently (currency formatting + consistent typographic emphasis)."
-        },
-        {
-          "path": "frontend/src/App.tsx",
-          "operation": "modify",
-          "description": "Wrap routed pages in the shared AppLayout and ensure all navigation labels and UI copy are English and use “VUURIX”."
-        },
-        {
-          "path": "frontend/src/components/store/ProductCard.tsx",
-          "operation": "modify",
-          "description": "Align product card styling to the theme (button styles, card spacing, text hierarchy) by composing existing shadcn-ui components (do not edit immutable ui components). Verify the component's usage instructions before implementing."
-        },
-        {
-          "path": "frontend/src/pages/CheckoutPage.tsx",
-          "operation": "modify",
-          "description": "Apply consistent form styling (inputs, labels, validation messaging) using composed shadcn-ui components; keep all text in English. Verify the component's usage instructions before implementing."
-        }
-      ]
-    },
-    {
-      "id": "REQ-5",
-      "summary": "Add and render generated brand assets (logo, hero banner, product placeholders) from frontend/public/assets/generated for a polished MVP.",
-      "acceptanceCriteria": [
-        "Generated images are committed under frontend/public/assets/generated and are referenced by the UI.",
-        "Home page displays the hero banner and VUURIX logo.",
-        "Products without custom images display a consistent placeholder image."
-      ],
-      "file_operations": [
-        {
-          "path": "frontend/public/assets/generated/vuurix-logo.dim_512x512.png",
-          "operation": "create",
-          "description": "Add generated asset file at frontend/public/assets/generated/vuurix-logo.dim_512x512.png and ensure it is referenced by the UI (no backend image serving)."
-        },
-        {
-          "path": "frontend/public/assets/generated/vuurix-hero.dim_1600x600.png",
-          "operation": "create",
-          "description": "Add generated asset file at frontend/public/assets/generated/vuurix-hero.dim_1600x600.png and ensure it is referenced by the UI (no backend image serving)."
-        },
-        {
-          "path": "frontend/public/assets/generated/vuurix-product-placeholder.dim_800x800.png",
-          "operation": "create",
-          "description": "Add generated asset file at frontend/public/assets/generated/vuurix-product-placeholder.dim_800x800.png and use it as the default when a product image is missing."
-        },
-        {
-          "path": "frontend/public/assets/generated/vuurix-product-placeholder-2.dim_800x800.png",
-          "operation": "create",
-          "description": "Add generated asset file at frontend/public/assets/generated/vuurix-product-placeholder-2.dim_800x800.png and make it available for optional UI variation if needed."
-        },
-        {
-          "path": "frontend/public/assets/generated/vuurix-product-placeholder-3.dim_800x800.png",
-          "operation": "create",
-          "description": "Add generated asset file at frontend/public/assets/generated/vuurix-product-placeholder-3.dim_800x800.png and make it available for optional UI variation if needed."
-        },
-        {
-          "path": "frontend/src/components/brand/BrandLogo.tsx",
-          "operation": "create",
-          "description": "Create a BrandLogo component that renders frontend/public/assets/generated/vuurix-logo.dim_512x512.png in header and key brand touchpoints."
-        },
-        {
-          "path": "frontend/src/pages/HomePage.tsx",
-          "operation": "modify",
-          "description": "Render the hero banner frontend/public/assets/generated/vuurix-hero.dim_1600x600.png and include BrandLogo; ensure featured products use placeholder when missing images."
+          "description": "Enhance the create/edit product form to include: (a) image URL input, (b) optional file picker that converts the file to a data URL, stores it into the imageUrl form field, and shows a preview before saving. Verify the component's usage instructions before implementing."
         },
         {
           "path": "frontend/src/components/store/ProductImage.tsx",
+          "operation": "modify",
+          "description": "Ensure ProductImage reliably falls back to existing generated placeholder assets when imageUrl is empty/invalid, while continuing to render any valid http(s) URL or data URL. Update placeholder references to match available generated assets under frontend/public/assets/generated. Verify the component's usage instructions before implementing."
+        }
+      ]
+    },
+    {
+      "id": "REQ-9",
+      "summary": "Add React Query mutation hooks for admin product add/update/delete with products query invalidation and user-friendly English error handling.",
+      "acceptanceCriteria": [
+        "There are React Query mutation hooks for addProduct, updateProduct, and deleteProduct.",
+        "On successful mutation, the products query cache is invalidated and the product list UI updates without a manual page refresh.",
+        "Mutation failures show an English error message (toast or inline error) and do not corrupt the UI state."
+      ],
+      "file_operations": [
+        {
+          "path": "frontend/src/hooks/mutations/useAddProduct.ts",
           "operation": "create",
-          "description": "Create a ProductImage component that falls back to frontend/public/assets/generated/vuurix-product-placeholder.dim_800x800.png when the product image URL is empty/invalid."
+          "description": "Create a React Query mutation hook that calls the backend addProduct capability via the actor and invalidates/refetches the ['products'] query on success; surface failures with an English error message (toast or inline). Verify the component's usage instructions before implementing."
         },
         {
-          "path": "frontend/src/components/store/ProductCard.tsx",
-          "operation": "modify",
-          "description": "Use ProductImage to ensure consistent placeholders for products without custom images; compose (do not modify) shadcn-ui components where appropriate. Verify the component's usage instructions before implementing."
+          "path": "frontend/src/hooks/mutations/useUpdateProduct.ts",
+          "operation": "create",
+          "description": "Create a React Query mutation hook that calls the backend updateProduct capability via the actor and invalidates/refetches the ['products'] query on success; surface failures with an English error message. Verify the component's usage instructions before implementing."
         },
         {
-          "path": "frontend/src/pages/ProductDetailPage.tsx",
+          "path": "frontend/src/hooks/mutations/useDeleteProduct.ts",
+          "operation": "create",
+          "description": "Create a React Query mutation hook that calls the backend deleteProduct capability via the actor and invalidates/refetches the ['products'] query on success; surface failures with an English error message. Verify the component's usage instructions before implementing."
+        },
+        {
+          "path": "frontend/src/pages/AdminProductsPage.tsx",
           "operation": "modify",
-          "description": "Use ProductImage to ensure consistent placeholders on the Product Detail page when a product image URL is empty/invalid."
+          "description": "Wire the add/update/delete mutation hooks into the admin page actions; on success, reset relevant local form state and rely on query invalidation to refresh the visible product list; on error, keep the UI stable and show an English error message. Verify the component's usage instructions before implementing."
         }
       ]
     }

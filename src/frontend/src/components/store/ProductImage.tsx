@@ -6,7 +6,6 @@ interface ProductImageProps {
 
 export default function ProductImage({ imageUrl, alt, className = '' }: ProductImageProps) {
   const placeholders = [
-    '/assets/generated/vuurix-product-placeholder.dim_800x800.png',
     '/assets/generated/vuurix-product-placeholder-2.dim_800x800.png',
     '/assets/generated/vuurix-product-placeholder-3.dim_800x800.png'
   ];
@@ -32,4 +31,3 @@ export default function ProductImage({ imageUrl, alt, className = '' }: ProductI
     />
   );
 }
-

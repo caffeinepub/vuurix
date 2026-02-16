@@ -1,17 +1,17 @@
 {
   "frontend/src/index.css": "Global styles with OKLCH color system using a sophisticated monochrome/cream palette for a fashion-forward aesthetic, avoiding blue/purple tones.",
   "frontend/tailwind.config.js": "Tailwind configuration with custom fonts (Inter), extended color tokens, elegant shadows, and letter-spacing for a refined typographic system.",
-  "frontend/src/App.tsx": "Main application component with TanStack Router setup, theme provider, and all routes (Home, Shop, Product Detail, Cart, Checkout, Order Confirmation).",
+  "frontend/src/App.tsx": "Main application component with TanStack Router setup including all routes (Home, Shop, Product Detail, Cart, Checkout, Order Confirmation, and Admin Products) with theme provider and toast notifications.",
   "frontend/src/state/cart.ts": "Zustand store for cart state management with localStorage persistence, supporting add/remove/update operations with size and color variants.",
   "frontend/src/hooks/queries/useProducts.ts": "React Query hook for fetching all products from the backend with 5-minute stale time.",
   "frontend/src/hooks/queries/useProduct.ts": "React Query hook for fetching a single product by ID from the backend.",
   "frontend/src/hooks/mutations/useCreateOrder.ts": "React Query mutation hook for creating orders via the backend with automatic query invalidation.",
   "frontend/src/hooks/queries/useOrder.ts": "React Query hook for fetching order details by ID from the backend.",
   "frontend/src/components/layout/AppLayout.tsx": "Root layout component wrapping all pages with header, main content area, and footer.",
-  "frontend/src/components/layout/SiteHeader.tsx": "Responsive site header with VUURIX branding, navigation links, cart icon with item count, and mobile menu.",
+  "frontend/src/components/layout/SiteHeader.tsx": "Responsive site header with VUURIX branding, navigation links, cart icon with item count, mobile menu, and conditional Admin link that only appears for admin users.",
   "frontend/src/components/layout/SiteFooter.tsx": "Site footer with brand info, links, social media icons, copyright, and Caffeine.ai attribution with UTM tracking.",
   "frontend/src/components/brand/BrandLogo.tsx": "Reusable component rendering the VUURIX logo from generated assets.",
-  "frontend/src/components/store/ProductImage.tsx": "Product image component with automatic fallback to placeholder images when URL is empty or invalid.",
+  "frontend/src/components/store/ProductImage.tsx": "Product image component with automatic fallback to placeholder images when URL is empty or invalid, supporting both http(s) URLs and data URLs.",
   "frontend/src/components/store/ProductCard.tsx": "Reusable product card component for listing pages with image, category, name, price, and hover effects.",
   "frontend/src/components/store/QuantityControl.tsx": "Reusable quantity stepper control with increment/decrement buttons and min/max constraints.",
   "frontend/src/components/design/Price.tsx": "Price formatting component that converts bigint amounts to USD currency format.",
@@ -22,5 +22,10 @@
   "frontend/src/pages/ProductDetailPage.tsx": "Product detail page with image, description, size/color selection, quantity control, and add to cart functionality.",
   "frontend/src/pages/CartPage.tsx": "Shopping cart page displaying cart items with quantity controls, remove actions, and order summary with checkout CTA.",
   "frontend/src/pages/CheckoutPage.tsx": "Checkout page with Internet Identity login requirement, shipping form validation, and order placement with loading states.",
-  "frontend/src/pages/OrderConfirmationPage.tsx": "Order confirmation page displaying order details and success message after successful checkout."
+  "frontend/src/pages/OrderConfirmationPage.tsx": "Order confirmation page displaying order details and success message after successful checkout.",
+  "frontend/src/hooks/queries/useIsCallerAdmin.ts": "React Query hook that checks if the current caller is an admin by calling the backend isCallerAdmin method with proper error handling.",
+  "frontend/src/hooks/mutations/useAddProduct.ts": "React Query mutation hook for adding new products with automatic products query invalidation and toast notifications for success/error states.",
+  "frontend/src/hooks/mutations/useUpdateProduct.ts": "React Query mutation hook for updating existing products with automatic products query invalidation and toast notifications for success/error states.",
+  "frontend/src/hooks/mutations/useDeleteProduct.ts": "React Query mutation hook for deleting products with automatic products query invalidation and toast notifications for success/error states.",
+  "frontend/src/pages/AdminProductsPage.tsx": "Admin-only product management page with full CRUD functionality including product list table, create/edit dialog with image upload/preview, delete confirmation, and access restriction for non-admin users."
 }

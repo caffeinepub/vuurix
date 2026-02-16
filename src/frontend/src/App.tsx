@@ -6,6 +6,7 @@ import ProductDetailPage from './pages/ProductDetailPage';
 import CartPage from './pages/CartPage';
 import CheckoutPage from './pages/CheckoutPage';
 import OrderConfirmationPage from './pages/OrderConfirmationPage';
+import AdminProductsPage from './pages/AdminProductsPage';
 import AppLayout from './components/layout/AppLayout';
 import { Toaster } from '@/components/ui/sonner';
 
@@ -49,13 +50,20 @@ const orderConfirmationRoute = createRoute({
   component: OrderConfirmationPage
 });
 
+const adminProductsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/admin/products',
+  component: AdminProductsPage
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   shopRoute,
   productRoute,
   cartRoute,
   checkoutRoute,
-  orderConfirmationRoute
+  orderConfirmationRoute,
+  adminProductsRoute
 ]);
 
 const router = createRouter({ routeTree });
@@ -74,4 +82,3 @@ export default function App() {
     </ThemeProvider>
   );
 }
-
